@@ -1,0 +1,16 @@
+/**
+ * Custom separator block styles.
+ */
+
+.wp-block-separator {
+	&[data-emoji] {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&::before {
+			content: attr(data-emoji);
+			display: block;
+		}
+	}
+}
