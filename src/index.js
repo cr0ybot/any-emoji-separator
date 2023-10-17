@@ -17,12 +17,20 @@ import TokenList from '@wordpress/token-list';
 import EmojiPickerDropdown from './control';
 
 /**
- * Register emoji block style for the separator block.
+ * Register emoji block style for the separator block that enables the emoji picker.
  */
 registerBlockStyle('core/separator', {
 	name: 'any-emoji',
 	label: 'Any Emoji',
 });
+
+/**
+ * Check if custom style is present in className.
+ */
+function isStyleAnyEmoji(className) {
+	const classList = new TokenList(className);
+	return classList.contains('is-style-any-emoji');
+}
 
 /**
  * Add a custom attribute to the separator block.
@@ -62,8 +70,7 @@ const withEmojiPickerControl = createHigherOrderComponent(
 		const { anyEmoji, className } = attributes;
 
 		// If not the custom style, return the original block edit.
-		const classList = new TokenList(className);
-		if (!classList.contains('is-style-any-emoji')) {
+		if (!isStyleAnyEmoji(className)) {
 			return <BlockEdit {...props} />;
 		}
 
@@ -98,8 +105,7 @@ const addAnyEmojiOnSave = (props, blockType, attributes) => {
 	const { anyEmoji, className } = attributes;
 
 	// If not the custom style, return the original props.
-	const classList = new TokenList(className);
-	if (!classList.contains('is-style-any-emoji')) {
+	if (!isStyleAnyEmoji(className)) {
 		return props;
 	}
 
@@ -129,8 +135,7 @@ const withAnyEmojiInEditor = createHigherOrderComponent(
 		const { anyEmoji, className } = attributes;
 
 		// If not the custom style, return the original block edit.
-		const classList = new TokenList(className);
-		if (!classList.contains('is-style-any-emoji')) {
+		if (!isStyleAnyEmoji(className)) {
 			return <BlockListBlock {...props} />;
 		}
 
