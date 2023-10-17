@@ -3,13 +3,14 @@
  */
 
 .wp-block-separator {
-	&[data-emoji] {
+	&[data-any-emoji] {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 
+		/* Must use ::before since the editor monopolizes ::after. 😡 */
 		&::before {
-			content: attr(data-emoji);
+			content: var(--any-emoji);
 			display: block;
 		}
 	}
