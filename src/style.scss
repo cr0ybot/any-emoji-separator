@@ -3,7 +3,7 @@
  */
 
 .wp-block-separator {
-	&[data-any-emoji] {
+	&.is-style-any-emoji {
 		display: flex;
 		align-items: center;
 		justify-content: center;
