@@ -7,12 +7,22 @@ import './style.scss';
 import './editor.scss';
 
 // WordPress dependencies.
+import { registerBlockStyle } from '@wordpress/blocks';
 import { BlockControls } from '@wordpress/block-editor';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
+import TokenList from '@wordpress/token-list';
 
 // Internal dependencies.
 import EmojiPickerDropdown from './control';
+
+/**
+ * Register emoji block style for the separator block.
+ */
+registerBlockStyle('core/separator', {
+	name: 'any-emoji',
+	label: 'Any Emoji',
+});
 
 /**
  * Add a custom attribute to the separator block.
@@ -49,9 +59,13 @@ const withEmojiPickerControl = createHigherOrderComponent(
 		}
 
 		const { attributes, setAttributes } = props;
-		const { anyEmoji } = attributes;
+		const { anyEmoji, className } = attributes;
 
-		console.log({ anyEmoji });
+		// If not the custom style, return the original block edit.
+		const classList = new TokenList(className);
+		if (!classList.contains('is-style-any-emoji')) {
+			return <BlockEdit {...props} />;
+		}
 
 		return (
 			<>
@@ -81,7 +95,14 @@ const addAnyEmojiOnSave = (props, blockType, attributes) => {
 		return props;
 	}
 
-	const { anyEmoji } = attributes;
+	const { anyEmoji, className } = attributes;
+
+	// If not the custom style, return the original props.
+	const classList = new TokenList(className);
+	if (!classList.contains('is-style-any-emoji')) {
+		return props;
+	}
+
 	const hasEmoji = anyEmoji.length > 0;
 
 	return {
@@ -105,7 +126,14 @@ const withAnyEmojiInEditor = createHigherOrderComponent(
 		}
 
 		const { attributes } = props;
-		const { anyEmoji } = attributes;
+		const { anyEmoji, className } = attributes;
+
+		// If not the custom style, return the original block edit.
+		const classList = new TokenList(className);
+		if (!classList.contains('is-style-any-emoji')) {
+			return <BlockListBlock {...props} />;
+		}
+
 		const hasEmoji = anyEmoji.length > 0;
 
 		return (
