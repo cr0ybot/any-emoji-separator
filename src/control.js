@@ -9,6 +9,7 @@ import {
 	Button,
 	Dropdown,
 	Flex,
+	FlexBlock,
 	FlexItem,
 	TextControl,
 	ToolbarButton,
@@ -70,8 +71,8 @@ export function EmojiPickerControl({
 			label={__('Select emoji to add', 'any-emoji-separator')}
 			{...props}
 		>
-			<Flex gap={1}>
-				<FlexItem>
+			<Flex className="any-emoji-separator-picker__header">
+				<FlexBlock>
 					<TextControl
 						className="any-emoji-separator-picker__input"
 						value={emojiState}
@@ -81,11 +82,12 @@ export function EmojiPickerControl({
 							'any-emoji-separator'
 						)}
 					/>
-				</FlexItem>
+				</FlexBlock>
 				<FlexItem>
 					<Button
 						size="small"
-						text={__('Done', 'any-emoji-separator')}
+						variant="primary"
+						text={__('Apply', 'any-emoji-separator')}
 						onClick={() => onChange?.(emojiRef.current)}
 					/>
 				</FlexItem>
@@ -112,6 +114,7 @@ export function EmojiPickerDropdown({ value, onChange, ...props }) {
 			className="any-emoji-separator-dropdown"
 			contentClassName="any-emoji-separator-dropdown__content"
 			position="bottom right"
+			expandOnMobile
 			renderToggle={({ isOpen, onToggle }) => (
 				<ToolbarButton
 					className="any-emoji-separator-dropdown__toggle"

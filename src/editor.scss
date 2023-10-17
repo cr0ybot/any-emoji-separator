@@ -1,3 +1,16 @@
 /**
  * Editor styles.
  */
+
+.any-emoji-separator-picker {
+
+	&__header {
+		margin-bottom: 8px;
+	}
+
+	&__input {
+		> .components-base-control__field {
+			margin-bottom: 0;
+		}
+	}
+}
